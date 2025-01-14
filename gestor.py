@@ -5,7 +5,7 @@ import streamlit as st
 from PIL import Image
 
 # Contraseña de protección (puedes cambiarla por una más segura)
-PASSWORD = "miContraseñaSegura"
+PASSWORD = "1234"
 
 # Función para borrar archivo
 def borrar_archivo(directorio, archivo_seleccionado):
