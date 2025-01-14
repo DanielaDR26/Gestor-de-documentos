@@ -4,6 +4,10 @@ import pandas as pd
 import streamlit as st
 from PIL import Image
 
+# Crear un directorio principal para almacenar los archivos subidos
+directorio_principal = './EspacioColaborativo'
+os.makedirs(directorio_principal, exist_ok=True)
+
 def mostrar_archivos(directorio):
     # Obtener lista de archivos en el directorio
     archivos = [f for f in os.listdir(directorio) if os.path.isfile(os.path.join(directorio, f))]
@@ -51,10 +55,6 @@ def borrar_archivo(directorio):
     else:
         if contrasena:
             st.error("Contraseña incorrecta. Intente nuevamente.")
-
-# Crear un directorio principal para almacenar los archivos subidos
-directorio_principal = './EspacioColaborativo'
-os.makedirs(directorio_principal, exist_ok=True)
 
 # Función para subir archivos (Documentos)
 def subir_archivos(carpeta_destino):
