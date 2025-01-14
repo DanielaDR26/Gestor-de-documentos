@@ -56,40 +56,35 @@ def listar_archivos(carpeta_destino):
             for f in files:
                 ruta_completa = os.path.join(root, f)
                 
-                # Generar una clave única usando la ruta y nombre del archivo
-                expander_key = f"{os.path.basename(root)}-{f}".replace(os.sep, "-")  # Asegurarse de que sea único
-                try:
-                    with st.expander(f"Archivo: {f}", expanded=False, key=expander_key):
-                        # Mostrar las opciones dentro del expander
-                        st.write(f"**Ruta:** {ruta_completa}")
-                        
-                        # Botón de descarga
-                        with open(ruta_completa, "rb") as file:
-                            st.download_button(
-                                label=f"Descargar {f}",
-                                data=file,
-                                file_name=f,
-                                mime="application/octet-stream",
-                                key=f"{expander_key}-download"  # Añadir un key único para el botón de descarga
-                            )
-                        
-                        # Opción para borrar el archivo con un key único para evitar conflictos
-                        delete_button_key = f"{expander_key}-delete"
-                        if st.button(f"🗑️ Borrar {f}", key=delete_button_key):
-                            borrar_archivo(root, f)
+                # Crear un expander para cada archivo sin el argumento 'key'
+                with st.expander(f"Archivo: {f}", expanded=False):
+                    # Mostrar las opciones dentro del expander
+                    st.write(f"**Ruta:** {ruta_completa}")
+                    
+                    # Botón de descarga
+                    with open(ruta_completa, "rb") as file:
+                        st.download_button(
+                            label=f"Descargar {f}",
+                            data=file,
+                            file_name=f,
+                            mime="application/octet-stream"
+                        )
+                    
+                    # Opción para borrar el archivo
+                    delete_button_key = f"{f}-delete"
+                    if st.button(f"🗑️ Borrar {f}", key=delete_button_key):
+                        borrar_archivo(root, f)
 
-                        # Opción para renombrar el archivo
-                        rename_input_key = f"{expander_key}-rename"
-                        nuevo_nombre = st.text_input(f"Renombrar {f} (dejar en blanco para no cambiar):", key=rename_input_key)
-                        if nuevo_nombre and nuevo_nombre != f:
-                            nuevo_ruta = os.path.join(root, nuevo_nombre)
-                            try:
-                                os.rename(ruta_completa, nuevo_ruta)  # Renombrar el archivo
-                                st.success(f'Archivo renombrado a {nuevo_nombre}')
-                            except Exception as e:
-                                st.error(f"No se pudo renombrar el archivo. Error: {e}")
-                except Exception as e:
-                    st.error(f"Error al mostrar el archivo {f}: {e}")
+                    # Opción para renombrar el archivo
+                    rename_input_key = f"{f}-rename"
+                    nuevo_nombre = st.text_input(f"Renombrar {f} (dejar en blanco para no cambiar):", key=rename_input_key)
+                    if nuevo_nombre and nuevo_nombre != f:
+                        nuevo_ruta = os.path.join(root, nuevo_nombre)
+                        try:
+                            os.rename(ruta_completa, nuevo_ruta)  # Renombrar el archivo
+                            st.success(f'Archivo renombrado a {nuevo_nombre}')
+                        except Exception as e:
+                            st.error(f"No se pudo renombrar el archivo. Error: {e}")
     else:
         st.warning(f"No existen archivos en {carpeta_destino}.")
 
