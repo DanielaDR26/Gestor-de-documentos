@@ -12,11 +12,14 @@ def borrar_archivo(directorio, archivo_seleccionado):
     # Mostrar un formulario para ingresar la contraseña
     contrasena = st.text_input("Ingrese la contraseña para borrar el archivo:", type="password")
 
+    # Mostrar la contraseña ingresada para depuración (solo para fines de prueba)
+    st.write(f"Contraseña ingresada: {contrasena}")
+
     # Botón para borrar el archivo
     if st.button(f"🗑️ Borrar {archivo_seleccionado}"):
         # Verificar si la contraseña ingresada es correcta
         if contrasena == PASSWORD:
-            # Intentar borrar el archivo
+            st.write("Contraseña correcta, intentando borrar el archivo.")
             try:
                 archivo_path = os.path.join(directorio, archivo_seleccionado)
                 os.remove(archivo_path)
@@ -24,9 +27,11 @@ def borrar_archivo(directorio, archivo_seleccionado):
             except Exception as e:
                 st.error(f"No se pudo borrar el archivo. Error: {e}")
         elif contrasena:  # Si la contraseña no es correcta y se ha ingresado algo
+            st.write("Contraseña incorrecta. Intente nuevamente.")
             st.error("Contraseña incorrecta. Intente nuevamente.")
         else:
             st.warning("Por favor ingrese una contraseña para borrar el archivo.")
+
             
 # Función para subir archivos (Documentos)
 def subir_archivos(carpeta_destino):
