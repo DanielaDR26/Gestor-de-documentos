@@ -55,20 +55,24 @@ def listar_archivos(carpeta_destino):
             sub_sangria = ' ' * 4 * (nivel + 1)
             for f in files:
                 ruta_completa = os.path.join(root, f)
-                st.write(f'{sub_sangria}{f}')
                 
-                # Agregar botón para descarga
-                with open(ruta_completa, "rb") as file:
-                    btn = st.download_button(
-                        label=f"Descargar {f}",
-                        data=file,
-                        file_name=f,
-                        mime="application/octet-stream"
-                    )
-                
-                # Agregar un ícono para borrar el archivo
-                if st.button(f"🗑️ Borrar {f}", key=f"{root}-{f}"):
-                    borrar_archivo(root, f)
+                # Crear un expander para cada archivo
+                with st.expander(f"Archivo: {f}", expanded=False):
+                    # Mostrar las opciones de descarga y borrado dentro del expander
+                    st.write(f"**Ruta:** {ruta_completa}")
+                    
+                    # Botón de descarga
+                    with open(ruta_completa, "rb") as file:
+                        st.download_button(
+                            label=f"Descargar {f}",
+                            data=file,
+                            file_name=f,
+                            mime="application/octet-stream"
+                        )
+                    
+                    # Opción para borrar el archivo
+                    if st.button(f"🗑️ Borrar {f}", key=f"{root}-{f}"):
+                        borrar_archivo(root, f)
     else:
         st.warning(f"No existen archivos en {carpeta_destino}.")
 
@@ -126,6 +130,10 @@ def menu_principal():
         mostrar_estadisticas()  # Mostrar la sección de Estadísticas
     elif opcion == "Documentos":
         mostrar_documentos()  # Mostrar la sección de Documentos
+
+# Llamar la función principal para ejecutar la app
+if __name__ == "__main__":
+    menu_principal()
 
 # Llamar la función principal para ejecutar la app
 if __name__ == "__main__":
