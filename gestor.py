@@ -93,18 +93,24 @@ def mostrar_normatividad():
     st.title("Normatividad")
     st.write("Aquí podrás ver los documentos relacionados con la normatividad.")
     # Agrega contenido específico para la sección de normatividad
+    subir_archivos('Normatividad')
+    listar_archivos('Normatividad')
 
 # Función para mostrar la sección de Estadísticas
 def mostrar_estadisticas():
     st.title("Estadísticas")
     st.write("Aquí podrás ver los documentos y gráficos relacionados con estadísticas.")
     # Agrega contenido específico para la sección de estadísticas
+    subir_archivos('Estadisticas')
+    listar_archivos('Estadisticas')
 
 # Función para mostrar la sección de Documentos
 def mostrar_documentos():
     st.title("Documentos")
     st.write("Aquí podrás ver los documentos subidos y gestionados.")
     # Agrega contenido específico para la sección de documentos
+    subir_archivos('Documentos')
+    listar_archivos('Documentos')
 
 # Llamar la función principal para ejecutar la app
 if __name__ == "__main__":
