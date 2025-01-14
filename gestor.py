@@ -27,7 +27,7 @@ def subir_archivos():
         else:
             st.warning("No se ha seleccionado ningún archivo para subir.")
 
-# Función para listar archivos y permitir la descarga
+# Función para listar archivos y permitir la descarga y renombrado
 def listar_archivos():
     st.subheader("Archivos en el directorio principal:")
     for root, dirs, files in os.walk(directorio_principal):
@@ -47,6 +47,13 @@ def listar_archivos():
                     file_name=f,
                     mime="application/octet-stream"
                 )
+            
+            # Agregar opción para renombrar
+            nuevo_nombre = st.text_input(f"Renombrar {f} (dejar en blanco para no cambiar):", "")
+            if nuevo_nombre and nuevo_nombre != f:
+                nuevo_ruta = os.path.join(root, nuevo_nombre)
+                os.rename(ruta_completa, nuevo_ruta)  # Renombrar archivo
+                st.success(f'Archivo renombrado a {nuevo_nombre}')
 
 # Menú de opciones con Streamlit
 def menu_principal():
@@ -63,3 +70,4 @@ def menu_principal():
 # Ejecutar la aplicación Streamlit
 if __name__ == "__main__":
     menu_principal()
+
