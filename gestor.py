@@ -9,18 +9,21 @@ PASSWORD = "miContraseñaSegura"
 
 # Función para borrar archivo
 def borrar_archivo(directorio, archivo_seleccionado):
-    # Pedir al usuario que ingrese la contraseña
-    contrasena = st.text_input("Ingrese la contraseña para borrar el archivo:", type="password")
+    # Mostrar el formulario de contraseña dentro del expander
+    contrasena = st.text_input("Ingrese la contraseña para borrar el archivo:", type="password", key="password_input")
     
-    if contrasena == PASSWORD:
-        # Borrar el archivo seleccionado
-        try:
-            os.remove(os.path.join(directorio, archivo_seleccionado))
-            st.success(f"Archivo '{archivo_seleccionado}' borrado con éxito.")
-        except Exception as e:
-            st.error(f"No se pudo borrar el archivo. Error: {e}")
-    else:
-        if contrasena:
+    # Botón para confirmar el borrado
+    borrar_button = st.button(f"🗑️ Borrar {archivo_seleccionado}")
+    
+    if borrar_button:
+        if contrasena == PASSWORD:
+            # Borrar el archivo seleccionado
+            try:
+                os.remove(os.path.join(directorio, archivo_seleccionado))
+                st.success(f"Archivo '{archivo_seleccionado}' borrado con éxito.")
+            except Exception as e:
+                st.error(f"No se pudo borrar el archivo. Error: {e}")
+        elif contrasena:  # Solo mostrar el error si se ha ingresado una contraseña
             st.error("Contraseña incorrecta. Intente nuevamente.")
 
 # Función para subir archivos (Documentos)
