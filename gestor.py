@@ -95,8 +95,7 @@ def mostrar_menu_principal():
     # Aquí mostramos solo el contenido específico del Menú Principal
     st.title("Gestor de Documentos")
     st.image("LogoIngAmbUD.png", caption="Gestor de Documentos", use_container_width=True)
-    st.write("""
-    **Bienvenido al Gestor de Documentos**  
+    st.write("""**Bienvenido al Gestor de Documentos**  
     Este es un sistema diseñado para facilitar el manejo de documentos. Permite subir, ver, descargar y organizar documentos relacionados con la normatividad, estadísticas y otros archivos importantes.
     
     Puedes cargar archivos y organizarlos en categorías específicas, tales como **Normatividad**, **Estadísticas** y **Documentos**.
@@ -106,7 +105,6 @@ def mostrar_menu_principal():
 def mostrar_normatividad():
     st.title("Normatividad")
     st.write("Aquí podrás ver los documentos relacionados con la normatividad.")
-    # Agrega contenido específico para la sección de normatividad
     subir_archivos('normatividad')  # Asegúrate de que la función esté definida antes de llamarla
     listar_archivos('normatividad')
 
@@ -114,7 +112,6 @@ def mostrar_normatividad():
 def mostrar_estadisticas():
     st.title("Estadísticas")
     st.write("Aquí podrás ver los documentos y gráficos relacionados con estadísticas.")
-    # Agrega contenido específico para la sección de estadísticas
     subir_archivos('estadisticas')
     listar_archivos('estadisticas')
 
@@ -122,7 +119,6 @@ def mostrar_estadisticas():
 def mostrar_documentos():
     st.title("Documentos")
     st.write("Aquí podrás ver los documentos subidos y gestionados.")
-    # Agrega contenido específico para la sección de documentos
     subir_archivos('Documentos')
     listar_archivos('Documentos')
 
