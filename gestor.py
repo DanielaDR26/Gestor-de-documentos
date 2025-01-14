@@ -56,8 +56,8 @@ def listar_archivos(carpeta_destino):
             for f in files:
                 ruta_completa = os.path.join(root, f)
                 
-                # Crear un expander para cada archivo con un key único basado en la ruta completa del archivo
-                expander_key = f"{root}-{f}-expander"  # key único basado en la ruta
+                # Crear un expander para cada archivo con un key único generado por el nombre completo del archivo
+                expander_key = f"{root}-{f}".replace(os.sep, "-")  # Sustituir os.sep para evitar conflictos
                 with st.expander(f"Archivo: {f}", expanded=False, key=expander_key):
                     # Mostrar las opciones dentro del expander
                     st.write(f"**Ruta:** {ruta_completa}")
@@ -89,7 +89,6 @@ def listar_archivos(carpeta_destino):
                             st.error(f"No se pudo renombrar el archivo. Error: {e}")
     else:
         st.warning(f"No existen archivos en {carpeta_destino}.")
-
 
 # Función para mostrar el menú principal
 def mostrar_menu_principal():
