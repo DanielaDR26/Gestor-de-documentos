@@ -100,7 +100,7 @@ def mostrar_menu_principal():
     
     Puedes cargar archivos y organizarlos en categorías específicas, tales como **Normatividad**, **Estadísticas** y **Documentos**.
     """)
-
+    
 # Función para mostrar la sección de Normatividad
 def mostrar_normatividad():
     st.title("Normatividad")
