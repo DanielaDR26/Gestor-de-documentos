@@ -147,7 +147,7 @@ def documentos():
 def menu_principal():
     # Barra lateral de navegación
     st.sidebar.title("Espacio Colaborativo")
-    opcion = st.sidebar.radio("Seleccione una sección:", ["Normatividad", "Estadísticas", "Documentos"])
+    opcion = st.sidebar.radio("Seleccione una sección:", ["Menu Principal", "Normatividad", "Estadísticas", "Documentos"])
     
     # Mostrar contenido según la opción seleccionada
     if opcion == "Menu Principal":
