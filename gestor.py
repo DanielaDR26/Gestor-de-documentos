@@ -9,9 +9,13 @@ PASSWORD = "1234"
 
 # Función para borrar archivo
 def borrar_archivo(directorio, archivo_seleccionado):
-    # Mostrar el formulario de contraseña dentro del expander
+    # Crear un campo de texto para la contraseña si aún no está presente en el estado
+    if 'contrasena' not in st.session_state:
+        st.session_state.contrasena = ""
+
+    # Mostrar el formulario de contraseña solo si el usuario hace clic en el botón de borrar
     contrasena = st.text_input("Ingrese la contraseña para borrar el archivo:", type="password", key="password_input")
-    
+
     # Botón para confirmar el borrado
     borrar_button = st.button(f"🗑️ Borrar {archivo_seleccionado}")
     
@@ -25,6 +29,7 @@ def borrar_archivo(directorio, archivo_seleccionado):
                 st.error(f"No se pudo borrar el archivo. Error: {e}")
         elif contrasena:  # Solo mostrar el error si se ha ingresado una contraseña
             st.error("Contraseña incorrecta. Intente nuevamente.")
+
 
 # Función para subir archivos (Documentos)
 def subir_archivos(carpeta_destino):
