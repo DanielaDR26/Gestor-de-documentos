@@ -144,6 +144,7 @@ def mostrar_normatividad():
     subir_archivos('normatividad')
     listar_archivos('normatividad')
     borrar_archivo("normatividad")
+    mostrar_archivos("normatividad")
 # Función para mostrar la sección de Estadísticas
 def mostrar_estadisticas():
     st.title("Estadísticas")
