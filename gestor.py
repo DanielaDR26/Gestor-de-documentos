@@ -4,12 +4,6 @@ import pandas as pd
 import streamlit as st
 from PIL import Image
 
-import os
-import shutil
-import pandas as pd
-import streamlit as st
-from PIL import Image
-
 def mostrar_archivos(directorio):
     # Verificar si el directorio existe antes de intentar listar los archivos
     if not os.path.exists(directorio):
@@ -70,12 +64,14 @@ def borrar_archivo(directorio):
 
 # Crear un directorio principal para almacenar los archivos subidos
 directorio_principal = './EspacioColaborativo'
+# Crear el directorio principal si no existe
 os.makedirs(directorio_principal, exist_ok=True)
 
 # Función para subir archivos (Documentos)
 def subir_archivos(carpeta_destino):
     # Definir la carpeta donde se guardarán los archivos según la subpágina
     ruta_carpeta = os.path.join(directorio_principal, carpeta_destino)
+    
     # Crear el directorio si no existe
     os.makedirs(ruta_carpeta, exist_ok=True)
     
@@ -129,7 +125,6 @@ def listar_archivos(carpeta_destino):
 
 # Función para mostrar el menú principal
 def menu_principal():
-       
     # Opciones del menú en la barra lateral
     opcion = st.sidebar.radio("Seleccione una sección:", ["Menú Principal", "Normatividad", "Estadísticas", "Documentos"])
     
@@ -145,7 +140,6 @@ def menu_principal():
 
 # Función para mostrar el contenido de la página principal
 def mostrar_menu_principal():
-    # Aquí mostramos solo el contenido específico del Menú Principal
     st.title("Gestor de Documentos")
     st.image("LogoIngAmbUD.png", caption="Gestor de Documentos", use_container_width=True)
     st.write("""
@@ -182,10 +176,8 @@ def mostrar_documentos():
     subir_archivos('Documentos')
     listar_archivos('Documentos')
     borrar_archivo('Documentos')
-    
 
 # Llamar la función principal para ejecutar la app
 if __name__ == "__main__":
     menu_principal()
-
 
