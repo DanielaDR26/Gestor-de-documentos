@@ -4,6 +4,33 @@ import pandas as pd
 import streamlit as st
 from PIL import Image
 
+# Contraseña de protección (puedes cambiarla por una más segura)
+PASSWORD = "miContraseñaSegura"
+
+# Función para borrar archivo
+def borrar_archivo(directorio):
+    # Pedir al usuario que ingrese la contraseña
+    contrasena = st.text_input("Ingrese la contraseña para borrar el archivo:", type="password")
+    
+    if contrasena == PASSWORD:
+        # Mostrar los archivos disponibles para borrar
+        archivos = [f for f in os.listdir(directorio) if os.path.isfile(os.path.join(directorio, f))]  # Obtén todos los archivos en el directorio
+        if archivos:
+            archivo_seleccionado = st.selectbox("Seleccione un archivo para borrar", archivos)
+            
+            # Botón para borrar el archivo seleccionado
+            if st.button(f"Borrar archivo: {archivo_seleccionado}"):
+                try:
+                    os.remove(os.path.join(directorio, archivo_seleccionado))
+                    st.success(f"Archivo '{archivo_seleccionado}' borrado con éxito.")
+                except Exception as e:
+                    st.error(f"No se pudo borrar el archivo. Error: {e}")
+        else:
+            st.warning("No hay archivos disponibles para borrar.")
+    else:
+        if contrasena:
+            st.error("Contraseña incorrecta. Intente nuevamente.")
+
 # Crear un directorio principal para almacenar los archivos subidos
 directorio_principal = './EspacioColaborativo'
 os.makedirs(directorio_principal, exist_ok=True)
@@ -93,17 +120,17 @@ def mostrar_normatividad():
     st.title("Normatividad")
     st.write("Aquí podrás ver los documentos relacionados con la normatividad.")
     # Agrega contenido específico para la sección de normatividad
-    subir_archivos('Normatividad')
-    listar_archivos('Normatividad')
-
+    subir_archivos('normatividad')
+    listar_archivos('normatividad')
+    borrar_archivo("normatividad")
 # Función para mostrar la sección de Estadísticas
 def mostrar_estadisticas():
     st.title("Estadísticas")
     st.write("Aquí podrás ver los documentos y gráficos relacionados con estadísticas.")
     # Agrega contenido específico para la sección de estadísticas
-    subir_archivos('Estadisticas')
-    listar_archivos('Estadisticas')
-
+    subir_archivos('estadisticas')
+    listar_archivos('estadisticas')
+    borrar_archivo("estadisticas")
 # Función para mostrar la sección de Documentos
 def mostrar_documentos():
     st.title("Documentos")
@@ -111,6 +138,8 @@ def mostrar_documentos():
     # Agrega contenido específico para la sección de documentos
     subir_archivos('Documentos')
     listar_archivos('Documentos')
+    borrar_archivo('Documentos')
+    
 
 # Llamar la función principal para ejecutar la app
 if __name__ == "__main__":
