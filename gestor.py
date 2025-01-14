@@ -4,6 +4,27 @@ import pandas as pd
 import streamlit as st
 from PIL import Image
 
+def mostrar_archivos(directorio):
+    # Obtener lista de archivos en el directorio
+    archivos = [f for f in os.listdir(directorio) if os.path.isfile(os.path.join(directorio, f))]
+    
+    # Buscador por nombre de archivo
+    busqueda = st.text_input("Buscar documento por nombre:")
+    
+    # Filtrar archivos por nombre
+    if busqueda:
+        archivos = [archivo for archivo in archivos if busqueda.lower() in archivo.lower()]
+    
+    # Mostrar los archivos filtrados
+    if archivos:
+        archivo_seleccionado = st.selectbox("Seleccione un archivo para ver o descargar", archivos)
+        # Botón para descargar el archivo seleccionado
+        if st.button(f"Ver/Descargar {archivo_seleccionado}"):
+            with open(os.path.join(directorio, archivo_seleccionado), "rb") as file:
+                st.download_button(label="Descargar", data=file, file_name=archivo_seleccionado, mime="application/octet-stream")
+    else:
+        st.warning("No se encontraron archivos que coincidan con la búsqueda.")
+
 # Contraseña de protección (puedes cambiarla por una más segura)
 PASSWORD = "miContraseñaSegura"
 
