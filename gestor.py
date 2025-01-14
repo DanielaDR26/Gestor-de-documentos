@@ -56,9 +56,9 @@ def listar_archivos(carpeta_destino):
             for f in files:
                 ruta_completa = os.path.join(root, f)
                 
-                # Crear un expander para cada archivo
-                with st.expander(f"Archivo: {f}", expanded=False):
-                    # Mostrar las opciones de descarga y borrado dentro del expander
+                # Crear un expander para cada archivo con un key único
+                with st.expander(f"Archivo: {f}", expanded=False, key=f"{root}-{f}-expander"):
+                    # Mostrar las opciones dentro del expander
                     st.write(f"**Ruta:** {ruta_completa}")
                     
                     # Botón de descarga
@@ -67,12 +67,23 @@ def listar_archivos(carpeta_destino):
                             label=f"Descargar {f}",
                             data=file,
                             file_name=f,
-                            mime="application/octet-stream"
+                            mime="application/octet-stream",
+                            key=f"{root}-{f}-download"  # Añadir un key único para el botón de descarga
                         )
                     
-                    # Opción para borrar el archivo
-                    if st.button(f"🗑️ Borrar {f}", key=f"{root}-{f}"):
+                    # Opción para borrar el archivo con un key único para evitar conflictos
+                    if st.button(f"🗑️ Borrar {f}", key=f"{root}-{f}-delete"):
                         borrar_archivo(root, f)
+
+                    # Opción para renombrar el archivo
+                    nuevo_nombre = st.text_input(f"Renombrar {f} (dejar en blanco para no cambiar):", key=f"{root}-{f}-rename")
+                    if nuevo_nombre and nuevo_nombre != f:
+                        nuevo_ruta = os.path.join(root, nuevo_nombre)
+                        try:
+                            os.rename(ruta_completa, nuevo_ruta)  # Renombrar el archivo
+                            st.success(f'Archivo renombrado a {nuevo_nombre}')
+                        except Exception as e:
+                            st.error(f"No se pudo renombrar el archivo. Error: {e}")
     else:
         st.warning(f"No existen archivos en {carpeta_destino}.")
 
