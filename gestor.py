@@ -1,60 +1,55 @@
 import os
 import shutil
+import streamlit as st
 
 # Crear un directorio principal para almacenar los archivos subidos
 directorio_principal = './EspacioColaborativo'
 os.makedirs(directorio_principal, exist_ok=True)
 
+# Función para subir archivos
 def subir_archivos():
-    """Función para subir archivos y guardarlos en una carpeta especificada."""
-    # Permitir al usuario elegir una carpeta
-    nombre_carpeta = input('Ingrese el nombre de la carpeta donde desea guardar los archivos (se creará si no existe): ')
-    ruta_carpeta = os.path.join(directorio_principal, nombre_carpeta)
-    os.makedirs(ruta_carpeta, exist_ok=True)
-
-    print("Por favor, mueva o copie los archivos que desea subir en la carpeta del directorio actual.")
-    archivos = input('Ingrese los nombres de los archivos separados por comas (ejemplo: archivo1.txt, archivo2.csv): ').split(',')
-
-    # Mover archivos a la carpeta especificada
-    for nombre_archivo in archivos:
-        nombre_archivo = nombre_archivo.strip()  # Eliminar espacios extra
-        if os.path.exists(nombre_archivo):
-            shutil.move(nombre_archivo, ruta_carpeta)
-            print(f'Archivo {nombre_archivo} subido a {ruta_carpeta}')
+    nombre_carpeta = st.text_input('Ingrese el nombre de la carpeta donde desea guardar los archivos (se creará si no existe):')
+    
+    if nombre_carpeta:
+        ruta_carpeta = os.path.join(directorio_principal, nombre_carpeta)
+        os.makedirs(ruta_carpeta, exist_ok=True)
+        
+        # Subir archivos
+        archivos = st.file_uploader("Seleccione los archivos para subir", accept_multiple_files=True)
+        
+        if archivos:
+            for archivo in archivos:
+                # Guardar cada archivo en la carpeta especificada
+                ruta_archivo = os.path.join(ruta_carpeta, archivo.name)
+                with open(ruta_archivo, "wb") as f:
+                    f.write(archivo.getbuffer())
+                st.success(f'Archivo {archivo.name} subido exitosamente a {ruta_carpeta}')
         else:
-            print(f'Archivo {nombre_archivo} no encontrado.')
+            st.warning("No se ha seleccionado ningún archivo para subir.")
 
-    print(f"Todos los archivos se han subido exitosamente a la carpeta '{nombre_carpeta}'.")
-
+# Función para listar archivos
 def listar_archivos():
-    """Función para listar todos los archivos en el directorio principal y sus subcarpetas."""
+    st.subheader("Archivos en el directorio principal:")
     for root, dirs, files in os.walk(directorio_principal):
         nivel = root.replace(directorio_principal, '').count(os.sep)
         sangria = ' ' * 4 * (nivel)
-        print(f'{sangria}{os.path.basename(root)}/')
+        st.write(f'{sangria}{os.path.basename(root)}/')
         sub_sangria = ' ' * 4 * (nivel + 1)
         for f in files:
-            print(f'{sub_sangria}{f}')
+            st.write(f'{sub_sangria}{f}')
 
-# Menú principal
+# Menú de opciones con Streamlit
 def menu_principal():
-    while True:
-        print("\nMenú del Espacio Colaborativo:")
-        print("1. Subir Archivos")
-        print("2. Listar Archivos")
-        print("3. Salir")
-        opcion = input("Ingrese su opción: ")
-        
-        if opcion == '1':
-            subir_archivos()
-        elif opcion == '2':
-            listar_archivos()
-        elif opcion == '3':
-            print("Saliendo... ¡Adiós!")
-            break
-        else:
-            print("Opción inválida. Por favor ingrese 1, 2 o 3.")
+    st.title("Espacio Colaborativo")
+    opcion = st.radio("Seleccione una opción:", ["Subir Archivos", "Listar Archivos", "Salir"])
+    
+    if opcion == "Subir Archivos":
+        subir_archivos()
+    elif opcion == "Listar Archivos":
+        listar_archivos()
+    elif opcion == "Salir":
+        st.write("Saliendo... ¡Adiós!")
 
-# Ejecutar el menú principal
+# Ejecutar la aplicación Streamlit
 if __name__ == "__main__":
     menu_principal()
