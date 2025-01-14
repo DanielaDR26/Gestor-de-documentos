@@ -71,27 +71,10 @@ def normatividad():
 # Función para mostrar estadísticas
 def estadisticas():
     st.title("Estadísticas")
-    st.write("Aquí puedes visualizar las estadísticas de tus archivos CSV.")
-    
-    # Subir archivos CSV
-    archivos_csv = st.file_uploader("Seleccione archivos CSV para ver estadísticas", type=["csv"], accept_multiple_files=True)
-    
-    if archivos_csv:
-        for archivo in archivos_csv:
-            # Leer archivo CSV con Pandas
-            df = pd.read_csv(archivo)
-            
-            # Mostrar la tabla del CSV
-            st.subheader(f"Datos de {archivo.name}")
-            st.dataframe(df)
-            
-            # Mostrar estadísticas básicas
-            st.subheader("Estadísticas básicas")
-            st.write("Promedio de las columnas numéricas:")
-            st.write(df.describe())
-            
-            st.write("Primeras filas del archivo:")
-            st.write(df.head())
+    st.write("Aquí puedes visualizar los archivos que muestren estadísticas del proyecto curricular.")
+    # Llamar a la función de subir y listar archivos relacionados con estadísticas
+    subir_archivos('Normatividad')
+    listar_archivos('Normatividad')
 
 # Función para mostrar documentos
 def documentos():
