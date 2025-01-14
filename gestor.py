@@ -4,11 +4,18 @@ import pandas as pd
 import streamlit as st
 from PIL import Image
 
-# Crear un directorio principal para almacenar los archivos subidos
-directorio_principal = './EspacioColaborativo'
-os.makedirs(directorio_principal, exist_ok=True)
+import os
+import shutil
+import pandas as pd
+import streamlit as st
+from PIL import Image
 
 def mostrar_archivos(directorio):
+    # Verificar si el directorio existe antes de intentar listar los archivos
+    if not os.path.exists(directorio):
+        st.warning(f"El directorio '{directorio}' no existe.")
+        return
+    
     # Obtener lista de archivos en el directorio
     archivos = [f for f in os.listdir(directorio) if os.path.isfile(os.path.join(directorio, f))]
     
@@ -34,6 +41,11 @@ PASSWORD = "miContraseñaSegura"
 
 # Función para borrar archivo
 def borrar_archivo(directorio):
+    # Verificar si el directorio existe antes de intentar borrar archivos
+    if not os.path.exists(directorio):
+        st.warning(f"El directorio '{directorio}' no existe.")
+        return
+    
     # Pedir al usuario que ingrese la contraseña
     contrasena = st.text_input("Ingrese la contraseña para borrar el archivo:", type="password")
     
@@ -55,6 +67,10 @@ def borrar_archivo(directorio):
     else:
         if contrasena:
             st.error("Contraseña incorrecta. Intente nuevamente.")
+
+# Crear un directorio principal para almacenar los archivos subidos
+directorio_principal = './EspacioColaborativo'
+os.makedirs(directorio_principal, exist_ok=True)
 
 # Función para subir archivos (Documentos)
 def subir_archivos(carpeta_destino):
@@ -79,34 +95,36 @@ def subir_archivos(carpeta_destino):
 def listar_archivos(carpeta_destino):
     ruta_carpeta = os.path.join(directorio_principal, carpeta_destino)
     
-    if os.path.exists(ruta_carpeta):
-        st.subheader(f"Archivos en {carpeta_destino}:")
-        for root, dirs, files in os.walk(ruta_carpeta):
-            nivel = root.replace(ruta_carpeta, '').count(os.sep)
-            sangria = ' ' * 4 * (nivel)
-            st.write(f'{sangria}{os.path.basename(root)}/')
-            sub_sangria = ' ' * 4 * (nivel + 1)
-            for f in files:
-                ruta_completa = os.path.join(root, f)
-                st.write(f'{sub_sangria}{f}')
-                
-                # Agregar botón para descarga
-                with open(ruta_completa, "rb") as file:
-                    btn = st.download_button(
-                        label=f"Descargar {f}",
-                        data=file,
-                        file_name=f,
-                        mime="application/octet-stream"
-                    )
-                
-                # Agregar opción para renombrar
-                nuevo_nombre = st.text_input(f"Renombrar {f} (dejar en blanco para no cambiar):", "")
-                if nuevo_nombre and nuevo_nombre != f:
-                    nuevo_ruta = os.path.join(root, nuevo_nombre)
-                    os.rename(ruta_completa, nuevo_ruta)  # Renombrar archivo
-                    st.success(f'Archivo renombrado a {nuevo_nombre}')
-    else:
-        st.warning(f"No existen archivos en {carpeta_destino}.")
+    # Verificar si el directorio existe antes de intentar listar los archivos
+    if not os.path.exists(ruta_carpeta):
+        st.warning(f"El directorio '{ruta_carpeta}' no existe.")
+        return
+    
+    st.subheader(f"Archivos en {carpeta_destino}:")
+    for root, dirs, files in os.walk(ruta_carpeta):
+        nivel = root.replace(ruta_carpeta, '').count(os.sep)
+        sangria = ' ' * 4 * (nivel)
+        st.write(f'{sangria}{os.path.basename(root)}/')
+        sub_sangria = ' ' * 4 * (nivel + 1)
+        for f in files:
+            ruta_completa = os.path.join(root, f)
+            st.write(f'{sub_sangria}{f}')
+            
+            # Agregar botón para descarga
+            with open(ruta_completa, "rb") as file:
+                btn = st.download_button(
+                    label=f"Descargar {f}",
+                    data=file,
+                    file_name=f,
+                    mime="application/octet-stream"
+                )
+            
+            # Agregar opción para renombrar
+            nuevo_nombre = st.text_input(f"Renombrar {f} (dejar en blanco para no cambiar):", "")
+            if nuevo_nombre and nuevo_nombre != f:
+                nuevo_ruta = os.path.join(root, nuevo_nombre)
+                os.rename(ruta_completa, nuevo_ruta)  # Renombrar archivo
+                st.success(f'Archivo renombrado a {nuevo_nombre}')
 
 # Función para mostrar el menú principal
 def menu_principal():
@@ -145,6 +163,7 @@ def mostrar_normatividad():
     listar_archivos('normatividad')
     borrar_archivo("normatividad")
     mostrar_archivos("normatividad")
+
 # Función para mostrar la sección de Estadísticas
 def mostrar_estadisticas():
     st.title("Estadísticas")
@@ -153,6 +172,7 @@ def mostrar_estadisticas():
     subir_archivos('estadisticas')
     listar_archivos('estadisticas')
     borrar_archivo("estadisticas")
+
 # Función para mostrar la sección de Documentos
 def mostrar_documentos():
     st.title("Documentos")
@@ -161,6 +181,12 @@ def mostrar_documentos():
     subir_archivos('Documentos')
     listar_archivos('Documentos')
     borrar_archivo('Documentos')
+    
+
+# Llamar la función principal para ejecutar la app
+if __name__ == "__main__":
+    menu_principal()
+
     
 
 # Llamar la función principal para ejecutar la app
