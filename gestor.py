@@ -27,7 +27,7 @@ def subir_archivos():
         else:
             st.warning("No se ha seleccionado ningún archivo para subir.")
 
-# Función para listar archivos
+# Función para listar archivos y permitir la descarga
 def listar_archivos():
     st.subheader("Archivos en el directorio principal:")
     for root, dirs, files in os.walk(directorio_principal):
@@ -36,7 +36,17 @@ def listar_archivos():
         st.write(f'{sangria}{os.path.basename(root)}/')
         sub_sangria = ' ' * 4 * (nivel + 1)
         for f in files:
+            ruta_completa = os.path.join(root, f)
             st.write(f'{sub_sangria}{f}')
+            
+            # Agregar botón para descarga
+            with open(ruta_completa, "rb") as file:
+                btn = st.download_button(
+                    label=f"Descargar {f}",
+                    data=file,
+                    file_name=f,
+                    mime="application/octet-stream"
+                )
 
 # Menú de opciones con Streamlit
 def menu_principal():
