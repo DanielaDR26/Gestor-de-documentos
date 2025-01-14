@@ -60,59 +60,53 @@ def listar_archivos(carpeta_destino):
     else:
         st.warning(f"No existen archivos en {carpeta_destino}.")
 
-# Función para mostrar normatividad
-def normatividad():
-    st.title("Normatividad")
-    st.write("Aquí puedes subir y ver documentos relacionados con la normatividad.")
-    # Llamar a la función de subir y listar archivos relacionados con normatividad
-    subir_archivos('Normatividad')
-    listar_archivos('Normatividad')
-
-# Función para mostrar estadísticas
-def estadisticas():
-    st.title("Estadísticas")
-    st.write("Aquí puedes visualizar los archivos que muestren estadísticas del proyecto curricular.")
-    # Llamar a la función de subir y listar archivos relacionados con estadísticas
-    subir_archivos('Normatividad')
-    listar_archivos('Normatividad')
-
-# Función para mostrar documentos
-def documentos():
-    st.title("Documentos")
-    st.write("Aquí puedes gestionar otros documentos que no están en la normatividad ni en las estadísticas.")
-    # Llamar a la función de subir y listar archivos relacionados con documentos
-    subir_archivos('Documentos')
-    listar_archivos('Documentos')
-
-# Función para mostrar la página principal del gestor
+# Función para mostrar el menú principal
 def menu_principal():
-    st.title("Menú Principal")
+    st.title("Gestor de Documentos")
     
-    # Mostrar imagen
-    st.image("LogoIngAmbUD.png", caption="Gestor de Documentos", use_container_width=True)  # Asegúrate de poner la ruta correcta de la imagen
+    # Opciones del menú en la barra lateral
+    opcion = st.sidebar.radio("Seleccione una sección:", ["Menú Principal", "Normatividad", "Estadísticas", "Documentos"])
     
-    # Descripción
+    # Mostrar contenido según la opción seleccionada
+    if opcion == "Menú Principal":
+        mostrar_menu_principal()  # Mostrar la sección principal
+    elif opcion == "Normatividad":
+        mostrar_normatividad()  # Mostrar la sección de Normatividad
+    elif opcion == "Estadísticas":
+        mostrar_estadisticas()  # Mostrar la sección de Estadísticas
+    elif opcion == "Documentos":
+        mostrar_documentos()  # Mostrar la sección de Documentos
+
+# Función para mostrar el contenido de la página principal
+def mostrar_menu_principal():
+    # Aquí mostramos solo el contenido específico del Menú Principal
+    st.image("mi_imagen.jpg", caption="Gestor de Documentos", use_container_width=True)
     st.write("""
     **Bienvenido al Gestor de Documentos**  
     Este es un sistema diseñado para facilitar el manejo de documentos. Permite subir, ver, descargar y organizar documentos relacionados con la normatividad, estadísticas y otros archivos importantes.
     
     Puedes cargar archivos y organizarlos en categorías específicas, tales como **Normatividad**, **Estadísticas** y **Documentos**.
     """)
-    
-    # Opciones del menú
-    opcion = st.sidebar.radio("Seleccione una sección:", ["Menú Principal", "Normatividad", "Estadísticas", "Documentos"])
-    
-    # Mostrar contenido según la opción seleccionada
-    if opcion == "Menú Principal":
-        pass  # Ya estamos en la página principal
-    elif opcion == "Normatividad":
-        normatividad()
-    elif opcion == "Estadísticas":
-        estadisticas()
-    elif opcion == "Documentos":
-        documentos()
 
-# Ejecutar la aplicación Streamlit
+# Función para mostrar la sección de Normatividad
+def mostrar_normatividad():
+    st.title("Normatividad")
+    st.write("Aquí podrás ver los documentos relacionados con la normatividad.")
+    # Agrega contenido específico para la sección de normatividad
+
+# Función para mostrar la sección de Estadísticas
+def mostrar_estadisticas():
+    st.title("Estadísticas")
+    st.write("Aquí podrás ver los documentos y gráficos relacionados con estadísticas.")
+    # Agrega contenido específico para la sección de estadísticas
+
+# Función para mostrar la sección de Documentos
+def mostrar_documentos():
+    st.title("Documentos")
+    st.write("Aquí podrás ver los documentos subidos y gestionados.")
+    # Agrega contenido específico para la sección de documentos
+
+# Llamar la función principal para ejecutar la app
 if __name__ == "__main__":
     menu_principal()
 
