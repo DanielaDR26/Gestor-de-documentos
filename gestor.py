@@ -66,6 +66,7 @@ def borrar_archivo(directorio):
 directorio_principal = './EspacioColaborativo'
 # Crear el directorio principal si no existe
 os.makedirs(directorio_principal, exist_ok=True)
+st.write(f"Directorio principal creado: {directorio_principal}")  # Mensaje de depuración
 
 # Función para subir archivos (Documentos)
 def subir_archivos(carpeta_destino):
@@ -74,6 +75,7 @@ def subir_archivos(carpeta_destino):
     
     # Crear el directorio si no existe
     os.makedirs(ruta_carpeta, exist_ok=True)
+    st.write(f"Directorio de destino: {ruta_carpeta}")  # Mensaje de depuración
     
     # Subir archivos
     archivos = st.file_uploader("Seleccione los archivos para subir", accept_multiple_files=True)
