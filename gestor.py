@@ -80,7 +80,7 @@ def menu_principal():
 # Función para mostrar el contenido de la página principal
 def mostrar_menu_principal():
     # Aquí mostramos solo el contenido específico del Menú Principal
-    st.image("mi_imagen.jpg", caption="Gestor de Documentos", use_container_width=True)
+    st.image("LogoIngAmbUD.png", caption="Gestor de Documentos", use_container_width=True)
     st.write("""
     **Bienvenido al Gestor de Documentos**  
     Este es un sistema diseñado para facilitar el manejo de documentos. Permite subir, ver, descargar y organizar documentos relacionados con la normatividad, estadísticas y otros archivos importantes.
