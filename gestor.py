@@ -9,28 +9,25 @@ PASSWORD = "1234"
 
 # Función para borrar archivo
 def borrar_archivo(directorio, archivo_seleccionado):
-    # Crear un campo de texto para la contraseña si aún no está presente en el estado
-    if 'contrasena' not in st.session_state:
-        st.session_state.contrasena = ""
+    # Mostrar un formulario para ingresar la contraseña
+    contrasena = st.text_input("Ingrese la contraseña para borrar el archivo:", type="password")
 
-    # Mostrar el formulario de contraseña solo si el usuario hace clic en el botón de borrar
-    contrasena = st.text_input("Ingrese la contraseña para borrar el archivo:", type="password", key="password_input")
-
-    # Botón para confirmar el borrado
-    borrar_button = st.button(f"🗑️ Borrar {archivo_seleccionado}")
-    
-    if borrar_button:
+    # Botón para borrar el archivo
+    if st.button(f"🗑️ Borrar {archivo_seleccionado}"):
+        # Verificar si la contraseña ingresada es correcta
         if contrasena == PASSWORD:
-            # Borrar el archivo seleccionado
+            # Intentar borrar el archivo
             try:
-                os.remove(os.path.join(directorio, archivo_seleccionado))
+                archivo_path = os.path.join(directorio, archivo_seleccionado)
+                os.remove(archivo_path)
                 st.success(f"Archivo '{archivo_seleccionado}' borrado con éxito.")
             except Exception as e:
                 st.error(f"No se pudo borrar el archivo. Error: {e}")
-        elif contrasena:  # Solo mostrar el error si se ha ingresado una contraseña
+        elif contrasena:  # Si la contraseña no es correcta y se ha ingresado algo
             st.error("Contraseña incorrecta. Intente nuevamente.")
-
-
+        else:
+            st.warning("Por favor ingrese una contraseña para borrar el archivo.")
+            
 # Función para subir archivos (Documentos)
 def subir_archivos(carpeta_destino):
     # Definir la carpeta donde se guardarán los archivos según la subpágina
