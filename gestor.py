@@ -56,8 +56,9 @@ def listar_archivos(carpeta_destino):
             for f in files:
                 ruta_completa = os.path.join(root, f)
                 
-                # Crear un expander para cada archivo con un key único
-                with st.expander(f"Archivo: {f}", expanded=False, key=f"{root}-{f}-expander"):
+                # Crear un expander para cada archivo con un key único basado en la ruta completa del archivo
+                expander_key = f"{root}-{f}-expander"  # key único basado en la ruta
+                with st.expander(f"Archivo: {f}", expanded=False, key=expander_key):
                     # Mostrar las opciones dentro del expander
                     st.write(f"**Ruta:** {ruta_completa}")
                     
@@ -68,15 +69,17 @@ def listar_archivos(carpeta_destino):
                             data=file,
                             file_name=f,
                             mime="application/octet-stream",
-                            key=f"{root}-{f}-download"  # Añadir un key único para el botón de descarga
+                            key=f"{expander_key}-download"  # Añadir un key único para el botón de descarga
                         )
                     
                     # Opción para borrar el archivo con un key único para evitar conflictos
-                    if st.button(f"🗑️ Borrar {f}", key=f"{root}-{f}-delete"):
+                    delete_button_key = f"{expander_key}-delete"
+                    if st.button(f"🗑️ Borrar {f}", key=delete_button_key):
                         borrar_archivo(root, f)
 
                     # Opción para renombrar el archivo
-                    nuevo_nombre = st.text_input(f"Renombrar {f} (dejar en blanco para no cambiar):", key=f"{root}-{f}-rename")
+                    rename_input_key = f"{expander_key}-rename"
+                    nuevo_nombre = st.text_input(f"Renombrar {f} (dejar en blanco para no cambiar):", key=rename_input_key)
                     if nuevo_nombre and nuevo_nombre != f:
                         nuevo_ruta = os.path.join(root, nuevo_nombre)
                         try:
@@ -86,6 +89,7 @@ def listar_archivos(carpeta_destino):
                             st.error(f"No se pudo renombrar el archivo. Error: {e}")
     else:
         st.warning(f"No existen archivos en {carpeta_destino}.")
+
 
 # Función para mostrar el menú principal
 def mostrar_menu_principal():
