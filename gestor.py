@@ -62,8 +62,7 @@ def listar_archivos(carpeta_destino):
 
 # Función para mostrar el menú principal
 def menu_principal():
-    st.title("Gestor de Documentos")
-    
+       
     # Opciones del menú en la barra lateral
     opcion = st.sidebar.radio("Seleccione una sección:", ["Menú Principal", "Normatividad", "Estadísticas", "Documentos"])
     
@@ -80,6 +79,7 @@ def menu_principal():
 # Función para mostrar el contenido de la página principal
 def mostrar_menu_principal():
     # Aquí mostramos solo el contenido específico del Menú Principal
+    st.title("Gestor de Documentos")
     st.image("LogoIngAmbUD.png", caption="Gestor de Documentos", use_container_width=True)
     st.write("""
     **Bienvenido al Gestor de Documentos**  
