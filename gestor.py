@@ -73,19 +73,16 @@ def listar_archivos(carpeta_destino):
         st.warning(f"No existen archivos en {carpeta_destino}.")
 
 # Función para mostrar el menú principal
-def menu_principal():
-    # Opciones del menú en la barra lateral
-    opcion = st.sidebar.radio("Seleccione una sección:", ["Menú Principal", "Normatividad", "Estadísticas", "Documentos"])
+def mostrar_menu_principal():
+    # Aquí mostramos solo el contenido específico del Menú Principal
+    st.title("Gestor de Documentos")
+    st.image("LogoIngAmbUD.png", caption="Gestor de Documentos", use_container_width=True)
+    st.write("""
+    **Bienvenido al Gestor de Documentos**  
+    Este es un sistema diseñado para facilitar el manejo de documentos. Permite subir, ver, descargar y organizar documentos relacionados con la normatividad, estadísticas y otros archivos importantes.
     
-    # Mostrar contenido según la opción seleccionada
-    if opcion == "Menú Principal":
-        mostrar_menu_principal()  # Mostrar la sección principal
-    elif opcion == "Normatividad":
-        mostrar_normatividad()  # Mostrar la sección de Normatividad
-    elif opcion == "Estadísticas":
-        mostrar_estadisticas()  # Mostrar la sección de Estadísticas
-    elif opcion == "Documentos":
-        mostrar_documentos()  # Mostrar la sección de Documentos
+    Puedes cargar archivos y organizarlos en categorías específicas, tales como **Normatividad**, **Estadísticas** y **Documentos**.
+    """)
 
 # Función para mostrar la sección de Normatividad
 def mostrar_normatividad():
@@ -115,6 +112,22 @@ def mostrar_documentos():
 directorio_principal = './EspacioColaborativo'
 os.makedirs(directorio_principal, exist_ok=True)
 
+# Función para mostrar el menú principal
+def menu_principal():
+    # Opciones del menú en la barra lateral
+    opcion = st.sidebar.radio("Seleccione una sección:", ["Menú Principal", "Normatividad", "Estadísticas", "Documentos"])
+    
+    # Mostrar contenido según la opción seleccionada
+    if opcion == "Menú Principal":
+        mostrar_menu_principal()  # Mostrar la sección principal
+    elif opcion == "Normatividad":
+        mostrar_normatividad()  # Mostrar la sección de Normatividad
+    elif opcion == "Estadísticas":
+        mostrar_estadisticas()  # Mostrar la sección de Estadísticas
+    elif opcion == "Documentos":
+        mostrar_documentos()  # Mostrar la sección de Documentos
+
 # Llamar la función principal para ejecutar la app
 if __name__ == "__main__":
     menu_principal()
+
