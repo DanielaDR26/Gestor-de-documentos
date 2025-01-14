@@ -64,4 +64,77 @@ def borrar_archivo(directorio):
                 except Exception as e:
                     st.error(f"No se pudo borrar el archivo. Error: {e}")
         else:
-            st.warning("No 
+            st.warning("No hay archivos disponibles para borrar.")
+    else:
+        if contrasena:
+            st.error("Contraseña incorrecta. Intente nuevamente.")
+
+# Función para buscar archivos en un directorio
+def buscar_archivos(directorio):
+    busqueda = st.text_input("Buscar archivo:")
+    if busqueda:
+        archivos = [f for f in os.listdir(directorio) if busqueda.lower() in f.lower()]
+        if archivos:
+            archivo_seleccionado = st.selectbox("Seleccione un archivo para ver o descargar", archivos)
+            if st.button(f"Ver/Descargar {archivo_seleccionado}"):
+                with open(os.path.join(directorio, archivo_seleccionado), "rb") as file:
+                    st.download_button(label="Descargar", data=file, file_name=archivo_seleccionado, mime="application/octet-stream")
+        else:
+            st.warning("No se encontraron archivos que coincidan con la búsqueda.")
+    else:
+        st.warning("No se ha realizado ninguna búsqueda.")
+
+# Función para mostrar el menú principal
+def menu_principal():
+    # Opciones del menú en la barra lateral
+    opcion = st.sidebar.radio("Seleccione una sección:", ["Menú Principal", "Normatividad", "Estadísticas", "Documentos"])
+    
+    # Mostrar contenido según la opción seleccionada
+    if opcion == "Menú Principal":
+        mostrar_menu_principal()  # Mostrar la sección principal
+    elif opcion == "Normatividad":
+        mostrar_normatividad()  # Mostrar la sección de Normatividad
+    elif opcion == "Estadísticas":
+        mostrar_estadisticas()  # Mostrar la sección de Estadísticas
+    elif opcion == "Documentos":
+        mostrar_documentos()  # Mostrar la sección de Documentos
+
+# Función para mostrar el contenido de la página principal
+def mostrar_menu_principal():
+    st.title("Gestor de Documentos")
+    st.write("""
+    **Bienvenido al Gestor de Documentos**  
+    Este es un sistema diseñado para facilitar el manejo de documentos. Permite subir, ver, descargar y organizar documentos relacionados con la normatividad, estadísticas y otros archivos importantes.
+    """)
+
+# Función para mostrar la sección de Normatividad
+def mostrar_normatividad():
+    st.title("Normatividad")
+    st.write("Aquí podrás ver los documentos relacionados con la normatividad.")
+    # Agregar funciones para subir, listar, borrar, buscar archivos
+    subir_archivos('normatividad')
+    buscar_archivos('normatividad')
+    borrar_archivo("normatividad")
+    mostrar_archivos("normatividad")
+
+# Función para mostrar la sección de Estadísticas
+def mostrar_estadisticas():
+    st.title("Estadísticas")
+    st.write("Aquí podrás ver los documentos y gráficos relacionados con estadísticas.")
+    # Agregar funciones para subir, listar, borrar, buscar archivos
+    subir_archivos('estadisticas')
+    buscar_archivos('estadisticas')
+    borrar_archivo("estadisticas")
+
+# Función para mostrar la sección de Documentos
+def mostrar_documentos():
+    st.title("Documentos")
+    st.write("Aquí podrás ver los documentos subidos y gestionados.")
+    # Agregar funciones para subir, listar, borrar, buscar archivos
+    subir_archivos('Documentos')
+    buscar_archivos('Documentos')
+    borrar_archivo('Documentos')
+
+# Llamar la función principal para ejecutar la app
+if __name__ == "__main__":
+    menu_principal()
