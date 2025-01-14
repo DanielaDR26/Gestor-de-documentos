@@ -76,6 +76,7 @@ os.makedirs(directorio_principal, exist_ok=True)
 def subir_archivos(carpeta_destino):
     # Definir la carpeta donde se guardarán los archivos según la subpágina
     ruta_carpeta = os.path.join(directorio_principal, carpeta_destino)
+    # Crear el directorio si no existe
     os.makedirs(ruta_carpeta, exist_ok=True)
     
     # Subir archivos
@@ -187,9 +188,4 @@ def mostrar_documentos():
 if __name__ == "__main__":
     menu_principal()
 
-    
-
-# Llamar la función principal para ejecutar la app
-if __name__ == "__main__":
-    menu_principal()
 
