@@ -1,11 +1,8 @@
 import os
 import shutil
-from google.colab import files
-import ipywidgets as widgets
-from IPython.display import display
 
 # Crear un directorio principal para almacenar los archivos subidos
-directorio_principal = '/content/EspacioColaborativo'
+directorio_principal = './EspacioColaborativo'
 os.makedirs(directorio_principal, exist_ok=True)
 
 def subir_archivos():
@@ -14,14 +11,18 @@ def subir_archivos():
     nombre_carpeta = input('Ingrese el nombre de la carpeta donde desea guardar los archivos (se creará si no existe): ')
     ruta_carpeta = os.path.join(directorio_principal, nombre_carpeta)
     os.makedirs(ruta_carpeta, exist_ok=True)
-    
-    # Subir archivos
-    subidos = files.upload()
-    
+
+    print("Por favor, mueva o copie los archivos que desea subir en la carpeta del directorio actual.")
+    archivos = input('Ingrese los nombres de los archivos separados por comas (ejemplo: archivo1.txt, archivo2.csv): ').split(',')
+
     # Mover archivos a la carpeta especificada
-    for nombre_archivo in subidos.keys():
-        shutil.move(nombre_archivo, ruta_carpeta)
-        print(f'Archivo {nombre_archivo} subido a {ruta_carpeta}')
+    for nombre_archivo in archivos:
+        nombre_archivo = nombre_archivo.strip()  # Eliminar espacios extra
+        if os.path.exists(nombre_archivo):
+            shutil.move(nombre_archivo, ruta_carpeta)
+            print(f'Archivo {nombre_archivo} subido a {ruta_carpeta}')
+        else:
+            print(f'Archivo {nombre_archivo} no encontrado.')
 
     print(f"Todos los archivos se han subido exitosamente a la carpeta '{nombre_carpeta}'.")
 
@@ -57,4 +58,3 @@ def menu_principal():
 # Ejecutar el menú principal
 if __name__ == "__main__":
     menu_principal()
-
