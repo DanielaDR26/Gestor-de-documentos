@@ -3,7 +3,7 @@ def menu_principal():
     st.title("Menú Principal")
     
     # Mostrar imagen
-    st.image("LogoIngAmbUD.png", caption="Gestor de Documentos", use_column_width=True)  # Asegúrate de poner la ruta correcta de la imagen
+    image= Image.open("LogoIngAmbUD.png", caption="Gestor de Documentos", use_column_width=True)  # Asegúrate de poner la ruta correcta de la imagen
     
     # Descripción
     st.write("""
