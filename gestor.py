@@ -1,5 +1,6 @@
 import os
 import shutil
+import pandas as pd
 import streamlit as st
 
 # Crear un directorio principal para almacenar los archivos subidos
@@ -66,9 +67,27 @@ def normatividad():
 # Función para mostrar estadísticas
 def estadisticas():
     st.title("Estadísticas")
-    st.write("Aquí puedes visualizar las estadísticas.")
-    # Podrías agregar gráficos, tablas u otros contenidos relacionados con estadísticas aquí
-    st.write("Estadísticas relacionadas con los documentos o cualquier otra información relevante.")
+    st.write("Aquí puedes visualizar las estadísticas de tus archivos CSV.")
+    
+    # Subir archivos CSV
+    archivos_csv = st.file_uploader("Seleccione archivos CSV para ver estadísticas", type=["csv"], accept_multiple_files=True)
+    
+    if archivos_csv:
+        for archivo in archivos_csv:
+            # Leer archivo CSV con Pandas
+            df = pd.read_csv(archivo)
+            
+            # Mostrar la tabla del CSV
+            st.subheader(f"Datos de {archivo.name}")
+            st.dataframe(df)
+            
+            # Mostrar estadísticas básicas
+            st.subheader("Estadísticas básicas")
+            st.write("Promedio de las columnas numéricas:")
+            st.write(df.describe())
+            
+            st.write("Primeras filas del archivo:")
+            st.write(df.head())
 
 # Función para mostrar documentos
 def documentos():
@@ -78,13 +97,13 @@ def documentos():
     subir_archivos()
     listar_archivos()
 
-# Menú de opciones con Streamlit
+# Menú de opciones en la barra lateral usando st.sidebar
 def menu_principal():
-    st.title("Espacio Colaborativo")
+    # Barra lateral de navegación
+    st.sidebar.title("Espacio Colaborativo")
+    opcion = st.sidebar.radio("Seleccione una sección:", ["Normatividad", "Estadísticas", "Documentos"])
     
-    # Subpáginas usando radio
-    opcion = st.radio("Seleccione una sección:", ["Normatividad", "Estadísticas", "Documentos"])
-    
+    # Mostrar contenido según la opción seleccionada
     if opcion == "Normatividad":
         normatividad()
     elif opcion == "Estadísticas":
