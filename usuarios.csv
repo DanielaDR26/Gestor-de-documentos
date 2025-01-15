@@ -1,5 +1,5 @@
-usuario,nombre,clave
-admin,"admin",admin
-profesoresIngAmb,"Profesores",IngAmb2025
-monitoresIngAmb,"Monitores",IngAmbM2025
-directivosIngAmb,"Directivos",IngAmbD2025
+usuario,nombre,clave,rol
+admin,"admin",admin,rol
+profesoresIngAmb,"Profesores",IngAmb2025,profesores
+monitoresIngAmb,"Monitores",IngAmbM2025,monitores
+directivosIngAmb,"Directivos",IngAmbD2025,directivos
