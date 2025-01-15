@@ -3,6 +3,8 @@ import shutil
 import pandas as pd
 import streamlit as st
 from PIL import Image
+import login
+
 archivo=__file__.split("\\")[-1]
 login.generarLogin(archivo)
 if 'usuario' in st.session_state:
