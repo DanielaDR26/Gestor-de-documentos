@@ -1,5 +1,5 @@
 import streamlit as st
-import login as login1
+import login as login
 
 def main():
     # Your main application logic here
