@@ -1,4 +1,5 @@
 usuario,nombre,clave
 admin,"admin",admin
-usrVentas,"Analista Ventas",clave123
-usrCompras,"Analista Compras",clave123
+profesoresIngAmb,"Profesores",IngAmb2025
+monitoresIngAmb,"Monitores",IngAmbM2025
+directivosIngAmb,"Directivos",IngAmbD2025
