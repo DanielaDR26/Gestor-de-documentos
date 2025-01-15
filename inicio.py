@@ -1,8 +1,10 @@
 import streamlit as st
 import login as login
 
-archivo=__file__.split("\\")[-1]
-login.generarLogin(archivo)
-if 'usuario' in st.session_state:
-    st.header('Página :orange[principal]')
-    st.subheader('Información página principal')
+def main():
+    # Your main application logic here
+    st.title("Gestor de Documentos")
+    login.generarLogin("inicio.py")  # Call the login function
+
+if __name__ == "__main__":
+    main()
