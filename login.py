@@ -142,7 +142,7 @@ def generarMenuRoles(usuario):
             st.rerun()
 
 # Generación de la ventana de login y carga de menú
-def generarLogin(archivo):
+def generarLogin1(archivo):
     """Genera la ventana de login o muestra el menú si el login es valido
     """    
     
