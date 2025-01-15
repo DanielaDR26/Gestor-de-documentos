@@ -1,5 +1,5 @@
 import streamlit as st
-import login as login
+import login
 
 st.header('Página :orange[principal]')
 login.generarLogin()
