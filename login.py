@@ -2,7 +2,7 @@
 import streamlit as st  # Librería para crear aplicaciones web interactivas. Instalación: pip install streamlit
 import pandas as pd  # Librería para manipulación y análisis de datos. Instalación: pip install pandas
 from streamlit_cookies_controller import CookieController # Librería para manejar cookies en Streamlit. Instalación: pip install streamlit-cookies-controller
-pip install streamlit-cookies-controller
+pip install streamlit pandas streamlit-cookies-controller
 # Creamos una instancia de CookieController
 controller = CookieController()
 
