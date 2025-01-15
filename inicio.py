@@ -1,5 +1,5 @@
 import streamlit as st
-import login as login
+import login.py as login
 
 archivo=__file__.split("\\")[-1]
 login.generarLogin(archivo)
