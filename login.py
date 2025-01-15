@@ -50,16 +50,13 @@ def generarMenu(usuario):
         st.caption(f"Rol: {rol}") # Mostramos el rol del usuario
         # Mostramos los enlaces de páginas
         st.page_link("inicio.py", label="Inicio", icon=":material/home:") # Enlace a la página de inicio
-        st.subheader("Tableros") # Subtítulo para los tableros
+        st.subheader("Tipos de documentación # Subtítulo para los tableros
         # Mostramos los enlaces a las páginas según el rol del usuario
-        if rol in ['ventas','admin','comercial']:
-            st.page_link("pages/paginaVentas.py", label="Ventas", icon=":material/sell:") # Enlace a la página de ventas        
-        if rol in ['compras','admin','comercial']:
-            st.page_link("pages/paginaCompras.py", label="Compras", icon=":material/shopping_cart:") # Enlace a la página de compras
-        if rol in ['personal','admin','compras']:
-            st.page_link("pages/paginaPersonal.py", label="Personal", icon=":material/group:") # Enlace a la página de personal   
-        if rol in ['contabilidad','admin']:
-            st.page_link("pages/paginaContabilidad.py", label="Contabilidad", icon=":material/payments:") # Enlace a la página de contabilidad    
+        if rol in ['profesores','directivos']:
+            st.page_link("pages/gestor.py", label="Gestor", icon=":material/sell:") # Enlace a la página de ventas        
+        if rol in ['profesores','directivos','monitores']:
+            st.page_link("pages/page1.py", label="Documentos", icon=":material/shopping_cart:") # Enlace a la página de compras
+          
         # Botón para cerrar la sesión
         btnSalir=st.button("Salir") # Creamos un botón para salir
         if btnSalir: # Si se presiona el botón
